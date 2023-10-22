@@ -28,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
     public Product update(Product product, Long id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isPresent()) {
+            product.setCode(id);
             return productRepository.save(product);
         }
         return null;
