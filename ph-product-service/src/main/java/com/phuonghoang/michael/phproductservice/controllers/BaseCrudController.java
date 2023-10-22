@@ -19,46 +19,46 @@ public abstract class BaseCrudController<SERVICE extends BaseCrudService<SRC, ID
 
     @PostMapping
     ResponseEntity<DTO> create(@RequestBody DTO dto) {
-        log.info("[Product] create {}", dto.toString());
+        log.info("[{}] create {}", srcClass.getSimpleName(), dto.toString());
 
         SRC src = modelMapper.map(dto, srcClass);
         SRC createdSrc = service.create(src);
         DTO createdDto = modelMapper.map(createdSrc, dtoClass);
 
-        log.info("[Product] create result {}", createdDto.toString());
+        log.info("[{}] create result {}",dtoClass.getSimpleName(),  createdDto.toString());
         return new ResponseEntity<>(createdDto, HttpStatus.CREATED);
     }
 
     @GetMapping("{id}")
     ResponseEntity<DTO> get(@PathVariable("id") ID id) {
-        log.info("[{}] get {}", srcClass.toString(), id);
+        log.info("[{}] get {}", srcClass.getSimpleName(), id);
 
         SRC src = service.get(id);
         DTO dto = modelMapper.map(src, dtoClass);
 
-        log.info("[{}] get result {}", srcClass.toString(), dto.toString());
+        log.info("[{}] get result {}", dtoClass.getSimpleName(), dto.toString());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PutMapping("{id}")
     ResponseEntity<DTO> update(@PathVariable("id") ID id, @RequestBody DTO dto) {
-        log.info("[{}}] update {} {}", srcClass.toString(), id, dto.toString());
+        log.info("[{}] update {} {}", srcClass.getSimpleName(), id, dto.toString());
 
         SRC src = modelMapper.map(dto, srcClass);
         SRC savedSrc = service.update(src, id);
         DTO savedDto = modelMapper.map(savedSrc, dtoClass);
 
-        log.info("[{}}] update result {}", srcClass.toString(), savedDto.toString());
+        log.info("[{}] update result {}", dtoClass.getSimpleName(), savedDto.toString());
         return new ResponseEntity<>(savedDto, HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
     ResponseEntity<SRC> delete(@PathVariable("id") ID id) {
-        log.info("[{}] delete {}", srcClass.toString(), id);
+        log.info("[{}] delete {}", srcClass.getSimpleName(), id);
 
         Boolean result = service.delete(id);
 
-        log.info("[{}] delete result {}", srcClass.toString(), result);
+        log.info("[{}] delete result {}", dtoClass.getSimpleName(), result);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
