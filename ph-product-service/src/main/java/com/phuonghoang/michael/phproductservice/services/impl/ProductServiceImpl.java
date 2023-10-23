@@ -4,6 +4,9 @@ import com.phuonghoang.michael.phproductservice.domain.entity.Product;
 import com.phuonghoang.michael.phproductservice.repositories.ProductRepository;
 import com.phuonghoang.michael.phproductservice.services.ProductService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -42,5 +45,10 @@ public class ProductServiceImpl implements ProductService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Page<Product> findBySearchCriteria(Specification<Product> specification, Pageable pageable) {
+        return productRepository.findAll(specification, pageable);
     }
 }
