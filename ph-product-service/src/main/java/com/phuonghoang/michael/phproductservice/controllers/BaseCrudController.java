@@ -25,7 +25,7 @@ public abstract class BaseCrudController<SERVICE extends BaseCrudService<SRC, ID
         SRC createdSrc = service.create(src);
         DTO createdDto = modelMapper.map(createdSrc, dtoClass);
 
-        log.info("[{}] create result {}",dtoClass.getSimpleName(),  createdDto.toString());
+        log.info("[{}] create result {}", dtoClass.getSimpleName(), createdDto.toString());
         return new ResponseEntity<>(createdDto, HttpStatus.CREATED);
     }
 

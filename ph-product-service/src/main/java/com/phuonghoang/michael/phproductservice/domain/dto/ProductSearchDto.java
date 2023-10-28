@@ -1,6 +1,6 @@
 package com.phuonghoang.michael.phproductservice.domain.dto;
 
-import com.phuonghoang.michael.phproductservice.domain.utils.SearchCriteria;
+import com.phuonghoang.michael.phproductservice.utils.search.dto.SearchCriterionDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductSearchDto {
-    private List<SearchCriteria> searchCriteriaList;
+    private List<SearchCriterionDto> searchCriteria;
     private String dataOption;
 }

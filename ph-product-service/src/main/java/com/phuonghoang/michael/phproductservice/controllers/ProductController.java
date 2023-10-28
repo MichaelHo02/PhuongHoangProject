@@ -3,9 +3,9 @@ package com.phuonghoang.michael.phproductservice.controllers;
 import com.phuonghoang.michael.phproductservice.domain.dto.ProductDto;
 import com.phuonghoang.michael.phproductservice.domain.dto.ProductSearchDto;
 import com.phuonghoang.michael.phproductservice.domain.entity.Product;
-import com.phuonghoang.michael.phproductservice.domain.spec.ProductSpecificationBuilder;
-import com.phuonghoang.michael.phproductservice.domain.utils.SearchCriteria;
+import com.phuonghoang.michael.phproductservice.domain.entity.ProductSearch;
 import com.phuonghoang.michael.phproductservice.services.ProductService;
+import com.phuonghoang.michael.phproductservice.utils.search.spec.ProductSpecification;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -32,14 +32,9 @@ public class ProductController extends BaseCrudController<ProductService, Produc
             @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
             @RequestBody ProductSearchDto productSearchDto
     ) {
-        ProductSpecificationBuilder builder = new ProductSpecificationBuilder();
-        List<SearchCriteria> criteriaList = productSearchDto.getSearchCriteriaList();
-        if (criteriaList != null) {
-            criteriaList.forEach(x -> {
-                x.setDataOption(productSearchDto.getDataOption());
-                builder.with(x);
-            });
-        }
+        log.info(productSearchDto);
+        ProductSearch productSearch = modelMapper.map(productSearchDto, ProductSearch.class);
+        ProductSpecification.Builder builder = new ProductSpecification.Builder(productSearch);
         Pageable pageable = PageRequest.of(
                 pageNum,
                 pageSize,
