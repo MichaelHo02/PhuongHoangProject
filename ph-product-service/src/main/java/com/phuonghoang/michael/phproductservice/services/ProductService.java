@@ -1,7 +1,7 @@
 package com.phuonghoang.michael.phproductservice.services;
 
 import com.phuonghoang.michael.phproductservice.domain.entity.Product;
-import org.springframework.data.repository.core.CrudMethods;
+import com.phuonghoang.michael.phproductservice.domain.entity.ProductSearch;
 
-public interface ProductService extends BaseCrudService<Product, Long> {
+public interface ProductService extends BaseCrudService<Product, Long>, BaseSearchFilterService<Product, ProductSearch> {
 }

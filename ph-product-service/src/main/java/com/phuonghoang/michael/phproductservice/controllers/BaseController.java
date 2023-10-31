@@ -1,6 +1,8 @@
 package com.phuonghoang.michael.phproductservice.controllers;
 
 import com.phuonghoang.michael.phproductservice.services.BaseCrudService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -10,15 +12,15 @@ import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @Log4j2
-public abstract class BaseCrudController<SERVICE extends BaseCrudService<SRC, ID>, DTO, SRC, ID> {
-    protected SERVICE service;
+public abstract class BaseController<BASE_SERVICE extends BaseCrudService<SRC, ID>, DTO, SRC, ID> {
+    protected BASE_SERVICE service;
     protected ModelMapper modelMapper;
 
-    final Class<SRC> srcClass;
-    final Class<DTO> dtoClass;
+    protected final Class<SRC> srcClass;
+    protected final Class<DTO> dtoClass;
 
     @PostMapping
-    ResponseEntity<DTO> create(@RequestBody DTO dto) {
+    ResponseEntity<DTO> create(@RequestBody @Valid DTO dto) {
         log.info("[{}] create {}", srcClass.getSimpleName(), dto.toString());
 
         SRC src = modelMapper.map(dto, srcClass);
@@ -30,7 +32,7 @@ public abstract class BaseCrudController<SERVICE extends BaseCrudService<SRC, ID
     }
 
     @GetMapping("{id}")
-    ResponseEntity<DTO> get(@PathVariable("id") ID id) {
+    ResponseEntity<DTO> get(@PathVariable("id") @Min(1) ID id) {
         log.info("[{}] get {}", srcClass.getSimpleName(), id);
 
         SRC src = service.get(id);
@@ -41,7 +43,7 @@ public abstract class BaseCrudController<SERVICE extends BaseCrudService<SRC, ID
     }
 
     @PutMapping("{id}")
-    ResponseEntity<DTO> update(@PathVariable("id") ID id, @RequestBody DTO dto) {
+    ResponseEntity<DTO> update(@PathVariable("id") @Min(1) ID id, @RequestBody @Valid DTO dto) {
         log.info("[{}] update {} {}", srcClass.getSimpleName(), id, dto.toString());
 
         SRC src = modelMapper.map(dto, srcClass);
@@ -53,7 +55,7 @@ public abstract class BaseCrudController<SERVICE extends BaseCrudService<SRC, ID
     }
 
     @DeleteMapping("{id}")
-    ResponseEntity<SRC> delete(@PathVariable("id") ID id) {
+    ResponseEntity<SRC> delete(@PathVariable("id") @Min(1) ID id) {
         log.info("[{}] delete {}", srcClass.getSimpleName(), id);
 
         Boolean result = service.delete(id);

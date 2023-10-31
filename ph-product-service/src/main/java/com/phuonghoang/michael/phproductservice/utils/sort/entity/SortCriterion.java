@@ -1,5 +1,6 @@
-package com.phuonghoang.michael.phproductservice.utils.search.dto;
+package com.phuonghoang.michael.phproductservice.utils.sort.entity;
 
+import com.phuonghoang.michael.phproductservice.utils.sort.SortOption;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -11,13 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchCriterionDto {
+public class SortCriterion {
     @NotBlank
     private String filterKey;
 
     @NotNull
-    private Object value;
-
-    @NotBlank
-    private String operation;
+    private SortOption sortOption;
 }

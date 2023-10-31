@@ -60,8 +60,7 @@ public class ProductSpecification implements Specification<Product> {
 
             Specification<Product> result = new ProductSpecification(searchCriteria.remove(0));
 
-            while (!searchCriteria.isEmpty()) {
-                SearchCriterion searchCriterion = searchCriteria.remove(0);
+            for (SearchCriterion searchCriterion : searchCriteria) {
                 result = switch (productSearch.getDataOption()) {
                     case ALL -> Specification.where(result).and(new ProductSpecification(searchCriterion));
                     case ANY -> Specification.where(result).or(new ProductSpecification(searchCriterion));
